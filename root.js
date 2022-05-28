@@ -2,14 +2,12 @@ const { createApp, ref, reactive, computed, watch, onMounted, watchEffect, onBef
 const { Platform, useQuasar, Loading, QSpinnerGears } = Quasar;
 
 var vueObject = {
-name: 'root',
-template:
-/*html*/
-`
+  name: 'root',
+  template:
+    /*html*/
+    `
 <q-list bordered class="rounded-borders bg-grey-10" separator>
-
-  <q-expansion-item dark v-for="item in modelc.addresses" expand-separator icon="place" :label="item.address"
-    expand-icon-toggle :caption="item.status">
+  <q-expansion-item dark v-for="item in modelc.addresses" expand-separator icon="place" :label="item.address" expand-icon-toggle :caption="item.status" default-opened>
 
     <template v-slot:header>
       <q-item-section>
@@ -38,7 +36,6 @@ template:
     <position :cAddress='item.address' :cEmployee='item.employee' :cStatus='item.status'></position>
 
   </q-expansion-item>
-
 </q-list>
 
 <q-dialog v-model="confirm" persistent>
@@ -55,29 +52,30 @@ template:
   </q-card>
 </q-dialog>
 `
-,
-setup() {
-let modelc = reactive(model)
-let address = ref(model.address)
-let employee = ref(model.employee)
-let status = ref(model.status)
-const $q = useQuasar()
+  ,
+  setup() {
+    let modelc = reactive(model)
+    // let address = ref(model.address)
+    let employee = ref(model.employee)
+    // let status = ref(model.status)
+    const $q = useQuasar()
 
-function changeStatus() {
-console.log($q.platform.is.desktop)
-}
-return {
-modelc, address, employee, status, changeStatus, confirm: ref()
-}
-}
+    function changeStatus() {
+      console.log($q.platform.is.desktop)
+    };
+
+    return {
+      modelc, employee, status, changeStatus, confirm: ref()
+    }
+  }
 }
 
 const app = Vue.createApp(vueObject);
 app.use(Quasar, {
-config: {
-notify: { /* look at QuasarConfOptions from the API card */ },
-loading: { /* look at QuasarConfOptions from the API card */ }
-}
+  config: {
+    notify: { /* look at QuasarConfOptions from the API card */ },
+    loading: { /* look at QuasarConfOptions from the API card */ }
+  }
 });
 
 Quasar.lang.set(Quasar.lang.ru);

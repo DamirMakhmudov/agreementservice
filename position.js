@@ -3,7 +3,9 @@ app.component('position', {
   template:
     /*html*/
     `
-<div class="q-pa-md row fit items-end">
+<div class="q-pa-md row fit items-end" v-if="cEmployee != ''">
+
+  <!-- <div v-if="cEmployee != ''"> -->
   <q-field label="Исполнитель" dark stack-label borderless :dense="true" class="q-pr-md" style="width: 15%;">
     <template v-slot:prepend>
       <q-icon name="person" />
@@ -17,15 +19,18 @@ app.component('position', {
     <template v-slot:prepend>
       <q-icon name="place" />
     </template>
-    <a :href="'tel:'+users.phones[users.names.indexOf(cEmployee)]">{{users.phones[users.names.indexOf(cEmployee)]}}</a>
+    <a :href="'tel:'+engineers.phones[engineers.names.indexOf(cEmployee)]">{{engineers.phones[engineers.names.indexOf(cEmployee)]}}</a>
   </q-field>
 
   <q-field label="Email" dark stack-label borderless :dense="true" class="q-pr-md" style="width: 10%;">
     <template v-slot:prepend>
       <q-icon name="email" />
     </template>
-    <a :href="'mailto:'+users.emails[users.names.indexOf(cEmployee)]">{{users.emails[users.names.indexOf(cEmployee)]}}</a>
+    <a :href="'mailto:'+engineers.emails[engineers.names.indexOf(cEmployee)]">{{engineers.emails[engineers.names.indexOf(cEmployee)]}}</a>
   </q-field>
+  
+  <!-- </div> -->
+
 </div>
 `
   ,
@@ -35,10 +40,11 @@ app.component('position', {
     cStatus: String
   },
   setup(props) {
-    let users = reactive(model.users);
- 
+    let engineers = reactive(model.engineers);
+    let measurers = reactive(model.measurers);
     return {
-      users
+      engineers,
+      measurers
     }
   }
 })

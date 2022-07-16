@@ -10,8 +10,10 @@ template:
 <q-layout view="hHh lpR fFf">
   <q-page-container>
     <div>
+      <q-toggle v-model="expanded" label="Развернуть все" class="q-mb-md" />
     <q-list bordered class="rounded-borders">
-      <q-expansion-item :header-class="item.style" class="shadow-1 overflow-hidden q-my-xs"  style="border-radius: 30px" :dense="true" v-for="item in modelc.addresses" expand-separator icon="place" :label="item.address" expand-icon-toggle :caption="item.status">
+      <q-expansion-item v-model="expanded" :header-class="item.style" class="shadow-1 overflow-hidden q-my-xs" style="border-radius: 30px" :dense="false" v-for="item in modelc.addresses" 
+      dense-toggle icon="place" :label="item.address"  :caption="item.status">
         <position :cAddress='item.address' :cEngineer='item.engineer' cPosition='Инженер' :cMeasurer='item.measurer'></position>
         <!-- <position :cAddress='item.address' :cEngineer='item.measurer' cPosition='Обмерщик'></position> -->
       </q-expansion-item>
@@ -45,7 +47,7 @@ function changeStatus() {
 };
 
 return {
-modelc, changeStatus, confirm: ref(), text: ref("wedwedwede")
+modelc, changeStatus, confirm: ref(), text: ref("wedwedwede"), expanded: ref(false)
 }
 }
 }

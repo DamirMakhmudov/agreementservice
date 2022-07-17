@@ -3,64 +3,65 @@ const { Platform, useQuasar, Loading, Screen } = Quasar;
 Screen.setSizes({ sm: 300, md: 500, lg: 1000, xl: 2000 })
 
 var vueObject = {
-name: 'root',
-template:
-/*html*/
-`
+  name: 'root',
+  template:
+    /*html*/
+    `
 <q-layout view="hHh lpR fFf">
   <q-page-container>
     <div>
-      <q-toggle v-model="expanded" label="Развернуть все" class="q-mb-md" />
-    <q-list bordered class="rounded-borders">
-      <q-expansion-item v-model="expanded" :header-class="item.style" class="shadow-1 overflow-hidden q-my-xs" style="border-radius: 30px" :dense="false" v-for="item in modelc.addresses" 
-      dense-toggle icon="place" :label="item.address"  :caption="item.status">
-        <position :cAddress='item.address' :cEngineer='item.engineer' cPosition='Инженер' :cMeasurer='item.measurer'></position>
-        <!-- <position :cAddress='item.address' :cEngineer='item.measurer' cPosition='Обмерщик'></position> -->
-      </q-expansion-item>
-    </q-list>
-</div>
+      <q-toggle v-model="expanded" :label="expanded_text" class="q-mb-md" /> 
+      <q-list bordered class="rounded-borders">
+        <q-expansion-item v-model="expanded_model[item.address]" :header-class="item.style" class="shadow-1 overflow-hidden q-my-xs" style="border-radius: 30px" :dense="false" v-for="item in modelc.addresses" dense-toggle icon="place" :label="item.address" :caption="item.status" default-opened>
+          <position :cAddress='item.address' :cEngineer='item.engineer' cPosition='Инженер' :cMeasurer='item.measurer'></position>
+        </q-expansion-item>
+      </q-list>
+    </div>
   </q-page-container>
 </q-layout>
-
-<q-dialog v-model="confirm" persistent>
-  <q-card>
-    <q-card-section class="row items-center">
-      <q-avatar icon="contact_support" color="primary" text-color="white" />
-      <span class="q-ml-sm">Вы уверены?</span>
-    </q-card-section>
-
-    <q-card-actions align="right">
-      <q-btn flat label="Да" color="primary" v-close-popup @click="changeStatus()"></q-btn>
-      <q-btn flat label="Нет" color="primary" v-close-popup></q-btn>
-    </q-card-actions>
-  </q-card>
-</q-dialog>
 `
-,
-setup() {
-let modelc = reactive(model)
-const $q = useQuasar()
-// $q.screen.setSizes({ sm: 300, md: 500, lg: 1000, xl: 2000 })
+  ,
+  setup() {
+    let modelc = reactive(model)
+    const $q = useQuasar()
+    // $q.screen.setSizes({ sm: 300, md: 500, lg: 1000, xl: 2000 })
 
-function changeStatus() {
-// console.log($q.platform.is.desktop)
-};
+    let expanded = ref(false);
+    let expanded_model = ref({});
+    let expanded_text = ref('Развернуть все');
 
-return {
-modelc, changeStatus, confirm: ref(), text: ref("wedwedwede"), expanded: ref(false)
-}
-}
+    /* global collapse */
+    watch(expanded, (val) => {
+      if (Object.keys(expanded_model.value).length) {
+        expanded_model.value = {};
+        expanded_text.value = 'Развернуть все';
+      } else {
+        modelc.addresses.forEach(item => {
+          expanded_model.value[item.address] = true
+        });
+        expanded_text.value = 'Свернуть все';
+      }
+    })
+
+    return {
+      modelc,
+      confirm: ref(),
+      expanded,
+      expanded_model,
+      expanded_text
+    }
+  }
 }
 
 const app = Vue.createApp(vueObject);
 app.use(Quasar, {
-config: {
-notify: { /* look at QuasarConfOptions from the API card */ },
-loading: { /* look at QuasarConfOptions from the API card */ },
-plugins: [
-'Meta'
-]
-}
+  config: {
+    notify: { /* look at QuasarConfOptions from the API card */ },
+    loading: { /* look at QuasarConfOptions from the API card */ },
+    plugins: [
+      'Meta'
+    ]
+  }
 });
 
 Quasar.lang.set(Quasar.lang.ru);

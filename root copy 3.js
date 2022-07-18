@@ -11,55 +11,22 @@ template:
   <q-page-container>
     <div>
       <q-toggle v-model="expanded" :label="expanded_text" class="q-mb-md" />
-
       <q-list bordered class="rounded-borders">
-
-        <q-expansion-item v-model="expanded_model[item.address]" :header-class="item.style" expand-icon-toggle
-          class="shadow-1 overflow-hidden q-my-xs" style="border-radius: 30px" :dense="true"
-          v-for="item in modelc.addresses" icon="place" :label="item.address" :caption="item.status">
-
-          <template v-slot:header>
-
-            <q-item-section avatar>
-              <q-avatar icon="place"></q-avatar>
-            </q-item-section>
-
-            <div class="column justify-between  fit no-wrap">
-
-                <q-scroll-area fit no-wrap style="height:30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" :visible="false">
-                  <div class="row no-wrap" >
-                    {{item.address}}
-                    <q-btn color="primary" @click="{showing = true;addr=item.address}" label="Show"/>
-                  </div>
-                  
-                  <q-tooltip>{{item.address}}</q-tooltip>
-
-                </q-scroll-area>
-
-                <!-- <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"> -->
-                <!-- {{item.address}} -->
-                <!-- </div> -->
-
-                <div style="font-size: smaller">{{item.status}}</div>
-            </div>
-
-          </template>
-
-          <position :cAddress='item.address' :cEngineer='item.engineer' cPosition='Инженер' :cMeasurer='item.measurer'>
-          </position>
+        <q-expansion-item v-model="expanded_model[item.address]" :header-class="item.style"
+          class="shadow-1 overflow-hidden q-my-xs" style="border-radius: 30px" :dense="false"
+          v-for="item in modelc.addresses" dense-toggle icon="place" :label="item.address" :caption="item.status"
+          default-opened>
+          
+          <position :cAddress='item.address' :cEngineer='item.engineer' cPosition='Инженер' :cMeasurer='item.measurer'></position>
         </q-expansion-item>
 
         <!-- <q-item-section side> -->
         <!-- <q-btn flat color="primary" icon="verified" @click="confirm=true">Утвердить</q-btn> -->
         <!-- </q-item-section> -->
-
       </q-list>
-
     </div>
 
   </q-page-container>
-    <q-tooltip v-model="showing" :no-parent-event="true" :transition-duration=500 >{{addr}}</q-tooltip>
-
 </q-layout>
 `
 ,
@@ -87,8 +54,6 @@ expanded_text.value = 'Свернуть все';
 
 return {
 modelc,
-showing: ref(false),
-addr: ref(''),
 confirm: ref(),
 expanded,
 expanded_model,

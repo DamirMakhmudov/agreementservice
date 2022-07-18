@@ -4,9 +4,9 @@ app.component('position', {
     /*html*/
     `
 <!-- <div class="q-pa-md row fit items-end" v-if="cEngineer != ''" > -->
-<q-item-section side>
+<!-- <q-item-section side>
   <q-btn flat color="primary" icon="verified" @click="confirm=true">Утвердить</q-btn>
-</q-item-section>
+</q-item-section> -->
 
 <div class="q-pa-md row">
   <!-- <div class="q-gutter-md" style="max-width: 300px"> -->

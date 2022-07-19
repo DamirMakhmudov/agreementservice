@@ -25,21 +25,18 @@ app.component('position', {
       <template v-slot:prepend>
         <q-icon name="phone" />
       </template>
-      <a
-        :href="'tel:'+engineers.phones[engineers.names.indexOf(cEngineer)]">{{engineers.phones[engineers.names.indexOf(cEngineer)]}}</a>
+      <a :href="'tel:'+engineers.phones[engineers.names.indexOf(cEngineer)]">{{engineers.phones[engineers.names.indexOf(cEngineer)]}}</a>
     </q-field>
 
     <q-field label="Email" stack-label borderless :dense="true" class="q-pr-md">
       <template v-slot:prepend>
         <q-icon name="email" />
       </template>
-      <a
-        :href="'mailto:'+engineers.emails[engineers.names.indexOf(cEngineer)]">{{engineers.emails[engineers.names.indexOf(cEngineer)]}}</a>
+      <a :href="'mailto:'+engineers.emails[engineers.names.indexOf(cEngineer)]">{{engineers.emails[engineers.names.indexOf(cEngineer)]}}</a>
     </q-field>
 
     <!-- </div> -->
   </div>
-
 
   <div v-if="cMeasurer != ''">
 
@@ -56,37 +53,18 @@ app.component('position', {
       <template v-slot:prepend>
         <q-icon name="phone" />
       </template>
-      <a
-        :href="'tel:'+measurers.phones[measurers.names.indexOf(cMeasurer)]">{{measurers.phones[measurers.names.indexOf(cMeasurer)]}}</a>
+      <a :href="'tel:'+measurers.phones[measurers.names.indexOf(cMeasurer)]">{{measurers.phones[measurers.names.indexOf(cMeasurer)]}}</a>
     </q-field>
 
     <q-field label="Email" stack-label borderless :dense="true" class="q-pr-md">
       <template v-slot:prepend>
         <q-icon name="email" />
       </template>
-      <a
-        :href="'mailto:'+measurers.emails[measurers.names.indexOf(cMeasurer)]">{{measurers.emails[measurers.names.indexOf(cMeasurer)]}}</a>
+      <a :href="'mailto:'+measurers.emails[measurers.names.indexOf(cMeasurer)]">{{measurers.emails[measurers.names.indexOf(cMeasurer)]}}</a>
     </q-field>
 
-    <!-- </div> -->
   </div>
-
 </div>
-
-<q-dialog v-model="confirm" persistent>
-  <q-card>
-    <q-card-section class="row items-center">
-      <q-avatar icon="contact_support" color="primary" text-color="white" />
-      <span class="q-ml-sm">Вы уверены?</span>
-    </q-card-section>
-
-    <q-card-actions align="right">
-      <q-btn flat label="Да" color="primary" v-close-popup @click="changeStatus()"></q-btn>
-      <q-btn flat label="Нет" color="primary" v-close-popup></q-btn>
-    </q-card-actions>
-  </q-card>
-</q-dialog>
-
 `
   ,
   props: {
@@ -98,15 +76,11 @@ app.component('position', {
   setup(props) {
     let engineers = reactive(model.engineers);
     let measurers = reactive(model.measurers);
-    function changeStatus() {
-      console.log(props.cAddress);
-      // console.log($q.platform.is.desktop)
-    };
+  
     return {
       confirm: ref(),
       engineers,
       measurers,
-      changeStatus
     }
   }
 })

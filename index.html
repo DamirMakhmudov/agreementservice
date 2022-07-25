@@ -8,6 +8,9 @@
   <link rel="shortcut icon" href="https://cdn0.iconfinder.com/data/icons/business-381/500/business-work_7-512.png">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.9/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+  <!-- <link rel="stylesheet" href="style.css"> -->
   <title>Согласование</title>
 </head>
 
@@ -15,7 +18,91 @@
   <div id="q-app"></div>
 
   <script>
-  // var model = JSON.parse(<?= getModel(id) ?>);
+    // var model = JSON.parse(<?= getModel(id) ?>);
+
+    async function saveData(){
+      model.mode = 'finance';
+      model.sum.val = +model.sum.val.replace(/ /g, '');
+      model.consumption.val = model.consumption.val.label;
+      model.address.val = model.address.val.label;
+
+      let model2 = JSON.parse(JSON.stringify(model));
+
+      Object.keys(mega).forEach(key =>{
+        if(mega[key].hasOwnProperty('val')){
+          mega[key].val = ""
+        }
+      });
+      mega.sheet.val = 'Менеджер';
+      showofficeFn();
+      showconsumptionFn();
+      showaddressFn();
+
+      const url = 'https://script.google.com/macros/s/AKfycbzUgwNF8Tqs3tmw7sV3ZxWKBDN5bUJ2mfr7mUR5MLrWeCMIvo3GSS4ZfKUbYZN5eXRY/exec';
+      const requestOptions = {
+        method: "POST",
+        // mode: 'no-cors',
+        headers: {
+          // "Content-Type": "application/json",
+          // "Content-Type": "undefined",
+          "Content-Type": "application/x-www-form-urlencoded"
+          // "Content-Type": "text/plain",
+          // 'contentType': "application/json; charset=UTF-8",
+          // 'accept': 'application/json'
+          // 'accept': 'text/plain'
+        },
+        body: JSON.stringify(model2)
+      };
+      let response = await fetch(url, requestOptions);
+      // let data = await response.json();
+      
+      // fetch(url)
+      // .then(response => {
+      //   return response.json()
+      // })
+      // .then(data =>{
+      //   console.log(data.status)
+      // });
+
+      // fetch(url, requestOptions)
+      //   .then(response => {
+      //     return response.json()
+      //   })
+      //   .then(data =>{
+      //     console.log(data)
+      // });
+    }
+
+    
+    async function sendPOST() {
+      let
+        url = 'https://crm.pereplan-one.ru/bitrix/tools/act/update_deal.php',
+        // url = 'https://script.google.com/macros/s/AKfycbzUgwNF8Tqs3tmw7sV3ZxWKBDN5bUJ2mfr7mUR5MLrWeCMIvo3GSS4ZfKUbYZN5eXRY/exec',
+        data = {};
+
+      data["id"] = 1200;
+      data["urlOffer"] = "url address";
+      data["mode"] = "addressesbyengineer";
+      data["engineer"] = "Александр_Макаров";
+
+      let response = await fetch(url, {
+        method: 'POST',
+        muteHttpExceptions: false,
+        // mode: 'no-cors', // no-cors, *cors, same-origin, cors
+        headers: {
+          // 'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded',
+          // 'Content-Type': "application/json; charset=UTF-8",
+          'accept': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }
+        // ).then(resp =>
+        // console.log(resp.json())
+      );
+      console.log(await response.json());
+    }
+
   </script>
 
   <!-- Import Vue -->

@@ -16,9 +16,9 @@ var vueObject = {
 
         <!-- <q-expansion-item v-model="expanded_model[item.address]" :header-class="item.style" expand-icon-toggle class="shadow-3 overflow-hidden q-my-xs" style="border-radius: 20px" :dense="true" v-for="item in modelc.addresses" icon="place" :label="item.address" :caption="item.status"> -->
         <!-- <q-slide-item @right="onRight();curAddress = item.address" right-color="green" style="background-color: tranparent"> -->
-        <q-slide-item @right="opt => onRight(opt, item.address)" right-color="green" style="background-color: tranparent">
+        <q-slide-item @right="opt => onRight(opt, item.address)" right-color="green" style="background-color: tranparent" >
           
-          <template v-slot:right>
+          <template v-slot:right v-if='item.status=="Разрешение получено, идет ремонт"'>
             <div class="row items-center" font-style="black">
               <q-icon right name="done"></q-icon>
               УТВЕРДИТЬ
